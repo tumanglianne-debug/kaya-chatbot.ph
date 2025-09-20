@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KaYa</title>
+  <style>
+    /* ===== Global ===== */
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      scroll-behavior: smooth;
+    }
+    h1,h2,h3 { margin: 0; font-weight: 700; }
+
+    /* ===== Navbar ===== */
+    .navbar{
+      display:flex; justify-content:space-between; align-items:center;
+      background: linear-gradient(90deg,#3b82f6,#2563eb);
+      padding:12px 24px; position: sticky; top:0; z-index:1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .logo{ display:flex; align-items:center; }
+    .logo img{ height:48px; margin-right:10px; }
+    .logo span{ font-size:22px; color:#ffeb3b; font-weight:800; letter-spacing:1px; }
+    .nav-links a{ margin-left:18px; color:#fff; text-decoration:none; font-weight:600; cursor:pointer; }
+    .nav-links a:hover{ color:#ffeb3b; transform:translateY(-2px); }
+
+    /* ===== Sections ===== */
+    .section {
+      display:none;
+      min-height:100vh;
+      width:100vw;
+      animation:fadeIn .4s ease;
+    }
+    .section.active { display:block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:none; } }
+
+    /* ===== Hero ===== */
+    .hero{ display:flex; min-height:100vh; width:100%; }
+    .hero-left, .hero-right{ flex:1 }
+    .hero-left{
+      background:#fdfd96; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:32px; text-align:center;
+    }
+    .hero-left h1{ font-size:64px; color:#087830; margin-bottom:8px; }
+    .hero-left p{ font-size:20px; color:#4076b3; margin-bottom:18px; }
+    .btn { background:#ef4444; color:#fff; border:none; padding:12px 22px; border-radius:26px; cursor:pointer; font-weight:700; transition:.2s; }
+    .btn:hover { transform:scale(1.03); background:#dc2626; }
+
+    .hero-right{ position:relative; background:#000; display:flex; align-items:center; justify-content:center; }
+    .hero-right video{ position:absolute; width:100%; height:100%; top:0; left:0; object-fit:cover; }
+
+   /* ===== About Us (new design) ===== */
+    :root {
+      --green: #16b14b;
+      --page: #f5f7f5;
+      --panel: #ffffff;
+      --text: #222;
+    }
+    #about .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    #about .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px 0;
+    }
+    #about .logo img { height: 90px;
+      width: auto; }
+    #about .left-bar {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 6px;
+      height: 160px;
+      background: var(--green);
+      border-radius: 4px;
+    }
+    #about .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      gap: 20px;
+    }
+    #about .about {
+      font-size: clamp(48px, 8vw, 120px);
+      font-weight: 900;
+      color: var(--green);
+      margin: 0;
+      line-height: 1;
+    }
+    #about .photo-strip img {
+      width: 565px;
+      height: 150px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    #about .panel {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-top: 60px;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-top: 6px solid var(--green);
+    }
+    #about .panel p {
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      font-weight: 500;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+    #about .dots-top, #about .dots-bottom {
+      position: absolute;
+      display: flex;
+      gap: 10px;
+    }
+    #about .dots-top { top: -22px; right: 20px; }
+    #about .dots-bottom { bottom: -22px; left: 20px; }
+    #about .dot {
+      width: 14px;
+      height: 14px;
+      border: 3px solid var(--green);
+      border-radius: 50%;
+    }
+    #about .cta-wrap { text-align: center; }
+    #about .cta {
+      background: var(--green);
+      color: #fff;
+      padding: 14px 48px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #about .cta:hover {
+      background: #139e42;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+
+    /* ===== Features (scoped so nothing else changes) ===== */
+    #features .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    #features .header {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px 0;
+    }
+    #features .logo img {
+      height: 90px;
+      width: auto;
+    }
+    #features .left-bar {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 6px;
+      height: 160px;
+      background: #16b14b; /* feature original green */
+      border-radius: 4px;
+    }
+    #features .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      gap: 20px;
+    }
+    #features .about {
+      font-size: clamp(48px, 8vw, 120px);
+      font-weight: 900;
+      color: #16b14b;
+      margin: 0;
+      line-height: 1;
+    }
+    #features .photo-strip img {
+      width: 565px;
+      height: 150px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    #features .panel {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 40px 30px;
+      margin-top: 60px;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-top: 6px solid #16b14b;
+    }
+    #features .panel p {
+      max-width: 900px;
+      margin: 0 auto 30px auto;
+      font-weight: 500;
+      font-size: 1.1rem;
+      text-align: justify;
+      color: #222;
+    }
+    #features .dots-top, #features .dots-bottom {
+      position: absolute;
+      display: flex;
+      gap: 10px;
+    }
+    #features .dots-top { top: -22px; right: 20px; }
+    #features .dots-bottom { bottom: -22px; left: 20px; }
+    #features .dot {
+      width: 14px;
+      height: 14px;
+      border: 3px solid #16b14b;
+      border-radius: 50%;
+    }
+    #features .cta-wrap { text-align: center; margin-top: 18px; }
+    #features .cta {
+      background: #16b14b;
+      color: #fff;
+      padding: 14px 48px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #features .cta:hover {
+      background: #139e42;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+    @media (max-width: 768px) {
+      #features .hero { flex-direction: column; text-align: center; }
+      #features .logo img { height: 60px; }
+      #features .panel { padding: 30px 20px; }
+    }
+
+    /* ===== Chat Button & Popup ===== */
+    .chat-btn{ position:fixed; bottom:20px; right:20px; background:linear-gradient(135deg,#3b82f6,#2563eb); color:#fdfd96;;
+      padding:12px 18px; border-radius:40px; box-shadow:0 6px 18px rgba(0,0,0,0.25); cursor:pointer; z-index:9999; display:flex; align-items:center; gap:8px; }
+    #chat-popup{
+      display:none; position:fixed; right:20px; bottom:80px; width:360px; max-width:90%; height:500px; background:#fdfd96;; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.25); z-index:10000;
+      overflow:hidden; flex-direction:column; transition:all 0.3s ease-in-out;
+      border:2px solid #3b82f6;
+    }
+    .chat-header{
+      background:#3b82f6; padding:12px 16px; color:#fdfd96;; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:16px;
+      border-top-left-radius:18px; border-top-right-radius:18px;
+    }
+    .chat-history{
+      padding:12px; flex:1; overflow-y:auto; background:#fdfd96;; display:flex; flex-direction:column; gap:8px;
+    }
+    .chat-footer{ display:flex; border-top:1px solid #e2e8f0; }
+    .chat-footer input{
+      flex:1; padding:10px 14px; border:none; outline:none; border-radius:0;
+      font-size:14px;
+    }
+    .chat-footer button{
+      padding:0 16px; border:none; background:#087830; color:#fdfd96;; cursor:pointer; border-radius:0;
+      font-size:18px;
+    }
+
+    .user-message{
+      align-self:flex-end; background:#3b82f6; color:#fff; padding:10px 14px; border-radius:18px; max-width:75%; word-wrap:break-word;
+      box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    }
+    .bot-message{
+      align-self:flex-start; background:#e5e7eb; color:#000; padding:10px 14px; border-radius:18px; max-width:75%; word-wrap:break-word;
+      box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Typing Indicator (Messenger-like) */
+    .typing-indicator {
+      align-self: flex-start;
+      background: #e5e7eb;
+      color: #000;
+      padding: 10px 14px;
+      border-radius: 18px;
+      max-width: 75%;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .typing-indicator .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #555;
+      border-radius: 50%;
+      opacity: 0.25;
+      transform: translateY(0);
+      animation: typing-dot 1.2s infinite ease-in-out;
+    }
+    .typing-indicator .dot:nth-child(2) { animation-delay: 0.12s; }
+    .typing-indicator .dot:nth-child(3) { animation-delay: 0.24s; }
+
+    @keyframes typing-dot {
+      0% { opacity: 0.25; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-4px); }
+      60% { opacity: 0.6; transform: translateY(0); }
+      100% { opacity: 0.25; transform: translateY(0); }
+    }
+
+    /* ===== Modal ===== */
+    .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); justify-content:center; align-items:center; z-index:20000; }
+    .modal-content{ background:#fdfd96;; padding:20px; border-radius:12px; width:340px; box-shadow:0 8px 30px rgba(0,0,0,0.2); }
+    .modal-content input{ width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #ccc; outline:none; }
+    .modal-content button{ width:100%; padding:10px; background:#3b82f6; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:700; }
+    .toggle-link{ text-align:center; margin-top:10px; color:#2563eb; cursor:pointer; }
+
+    /* ===== Dashboard ===== */
+    .dashboard-container{ width:100%; max-width:none; min-height:100vh; margin:0; padding:24px; }
+    .dashboard-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+    .logout-btn{ background:#ef4444; color:#fff; padding:8px 14px; border:none; border-radius:8px; cursor:pointer; font-weight:700; }
+    .dashboard-nav{ display:flex; gap:10px; margin-bottom:18px; }
+    .dashboard-nav button{ padding:10px 12px; border-radius:8px; border:none; background:#f3f4f6; cursor:pointer; font-weight:600; }
+    .dashboard-nav button.active{ background:#3b82f6; color:#fff; transform:translateY(-2px); }
+    .dashboard-main{ display:flex; flex-direction:column; gap:12px; }
+    .card{ background:#fff; padding:18px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+
+    @media (max-width:860px){
+      .hero{ flex-direction:column; min-height:100vh; }
+      .hero-right{ display:none; }
+      .about-container{ padding:18px; }
+      #chat-popup{ width:95%; height:400px; bottom:60px; right:2.5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">
+      <img src="https://static.wixstatic.com/media/dc59d8_2d18335ad1884ecfa1b330f0c82bb4f2~mv2.png" alt="logo">
+      <span>KaYa</span>
+    </div>
+    <div class="nav-links" id="nav-links">
+      <!-- Links will be injected by JS -->
+    </div>
+  </div>
+
+  <!-- Home -->
+  <div id="home" class="section active">
+    <div class="hero">
+      <div class="hero-left">
+        <h1>KaYa</h1>
+        <p>"Kaibigan at Kayakap"</p>
+        <button id="get-started-btn" class="btn">Get Started</button>
+      </div>
+      <div class="hero-right">
+        <video autoplay muted loop playsinline>
+          <!-- keep your local path or replace with hosted video -->
+          <source src="C:\Users\Julieta L. Tumang\Videos\Recording 2025-08-21 215349.mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+<!-- About Us Section -->
+<div id="about" class="section" style="padding:40px 20px;">
+  <div class="container" style="max-width:1000px; margin:0 auto; padding:0;">
+
+    <!-- Top row: Green accent on the left + Heading + photo strip -->
+    <div class="top-row" style="display:flex; align-items:center; justify-content:space-between; gap:15px; margin-bottom:30px;">
+
+      <!-- Green bar + Heading -->
+      <div style="display:flex; align-items:center; gap:15px;">
+        <div class="green-accent" style="width:8px; height:80px; background:#16b14b; border-radius:4px;"></div>
+        <h1 class="about" style="margin:0; font-size:clamp(48px,7vw,72px); color:#16b14b; line-height:1;">About Us</h1>
+      </div>
+
+      <!-- Photo strip on the far right -->
+      <div class="photo-strip" style="flex-shrink:0;">
+        <img src="https://i.pinimg.com/736x/76/82/1e/76821e6eb66ce7373816f1fc873887e6.jpg"
+             alt="Photo strip"
+             style="width: 565px; height: 113.2px; object-fit:cover; border-radius:12px;">
+      </div>
+
+    </div>
+
+    <!-- Panel below -->
+    <section class="panel" style="width:100%; padding:20px; border-top:6px solid #16b14b; border-radius:12px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.1); box-sizing:border-box;">
+      <p style="margin:0; font-size:1rem; line-height:1.6; text-align:justify;">
+        <strong>KaYa</strong> is a chat-based AI chatbot created to offer emotional support that is easy to access and free from stigma. Whether someone is feeling overwhelmed, anxious, or simply needs a moment of connection, KaYa is designed to listen with empathy and respond with care. Developed as part of a research initiative focused on mental health accessibility, KaYa addresses the real barriers people face when seeking help, such as social stigma and limited resources. The chatbot features a simple and intuitive interface that encourages open conversation and emotional relief. Its design is guided by intelligent language processing and shaped by feedback from real users through post-trial surveys. KaYa is more than just a chatbot, it is a compassionate digital companion built to make mental health support feel safe, welcoming, and always within reach.
+      </p>
+
+      <div class="cta-wrap" style="margin-top:15px; text-align:center;">
+        <button class="cta" onclick="showSection('dashboard')">Go back to dashboard</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+<!-- Features Section --> 
+<div id="features" class="section" style="padding:40px 20px;">
+  <div class="container" style="max-width:1000px; margin:0 auto; padding:0;">
+
+    <!-- Top row: Green accent on the left + Heading + photo strip -->
+    <div class="top-row" style="display:flex; align-items:center; justify-content:space-between; gap:15px; margin-bottom:30px;">
+
+      <!-- Green bar + Heading -->
+      <div style="display:flex; align-items:center; gap:15px;">
+        <div class="green-accent" style="width:8px; height:80px; background:#16b14b; border-radius:4px;"></div>
+        <h1 class="about" style="margin:0; font-size:clamp(48px,7vw,72px); color:#16b14b; line-height:1;">Features</h1>
+      </div>
+
+      <!-- Photo strip on the far right -->
+      <div class="photo-strip" style="flex-shrink:0;">
+        <img src="https://i.pinimg.com/736x/76/82/1e/76821e6eb66ce7373816f1fc873887e6.jpg"
+             alt="Photo strip"
+             style="width:565px; height:113.2px; object-fit:cover; border-radius:12px;">
+      </div>
+
+    </div>
+
+    <!-- Panel below with dots -->
+    <section class="panel" style="width:100%; padding:20px; border-top:6px solid #16b14b; border-radius:12px; background:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.1); box-sizing:border-box; position:relative;">
+
+      <!-- Top dots -->
+      <div class="dots-top" style="display:flex; justify-content:center; gap:6px; margin-bottom:10px;">
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+      </div>
+
+      <p style="margin:0; font-size:1rem; line-height:1.6; text-align:justify;">
+        <strong>KaYa</strong> is a chat-based AI chatbot created to offer emotional support that is easy to access and free from stigma. Whether someone is feeling overwhelmed, anxious, or simply needs a moment of connection, KaYa is designed to listen with empathy and respond with care. Developed as part of a research initiative focused on mental health accessibility, KaYa addresses the real barriers people face when seeking help, such as social stigma and limited resources. The chatbot features a simple and intuitive interface that encourages open conversation and emotional relief. Its design is guided by intelligent language processing and shaped by feedback from real users through post-trial surveys. KaYa is more than just a chatbot, it is a compassionate digital companion built to make mental health support feel safe, welcoming, and always within reach.
+
+      </p>
+
+      <div class="cta-wrap" style="margin-top:15px; text-align:center;">
+        <button class="cta" onclick="showSection('dashboard')">Go back to dashboard</button>
+      </div>
+
+      <!-- Bottom dots -->
+      <div class="dots-bottom" style="display:flex; justify-content:center; gap:6px; margin-top:10px;">
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+        <span class="dot" style="width:8px; height:8px; background:#16b14b; border-radius:50%; display:inline-block;"></span>
+      </div>
+
+    </section>
+
+  </div>
+</div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="section">
+    <div class="dashboard-container">
+      <header class="dashboard-header">
+        <h1>Welcome, <span id="user-name">Guest</span> 👋</h1>
+        <button class="logout-btn" id="logout-btn">Log Out</button>
+      </header>
+
+      <nav class="dashboard-nav" id="dashboard-nav">
+        <button data-tab="profile" class="active">👤 Profile</button>
+        <button data-tab="chat">💬 Chat</button>
+        <button data-tab="settings">⚙️ Settings</button>
+      </nav>
+
+      <main class="dashboard-main">
+        <div id="profile" class="dashboard-tab" style="display:block">
+          <div class="card">
+            <h2>Your Profile</h2>
+            <p><strong>Name:</strong> <span id="profile-name">—</span></p>
+            <p><strong>Email:</strong> <span id="profile-email">—</span></p>
+          </div>
+        </div>
+
+        <div id="chat-tab" class="dashboard-tab" style="display:none">
+          <div class="card">
+            <h2>Quick Chat</h2>
+            <p>Start chatting with KaYa right here:</p>
+            <button class="btn" id="open-chat-btn">Open Chat</button>
+          </div>
+        </div>
+
+        <div id="settings" class="dashboard-tab" style="display:none">
+          <div class="card">
+            <h2>Settings</h2>
+            <p>Update preferences (placeholder).</p>
+            <button class="btn">Update Profile</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Floating Chat Button -->
+  <div class="chat-btn" id="chat-btn">💬 <span>Let's Chat!</span></div>
+
+  <!-- Chat Popup -->
+  <div id="chat-popup" role="dialog" aria-hidden="true">
+    <div class="chat-header">
+      <span>KaYa</span>
+      <button id="close-chat">×</button>
+    </div>
+    <div class="chat-history" id="chat-history"></div>
+    <div class="chat-footer">
+      <input id="chat-input" type="text" placeholder="Write your message..." />
+      <button id="send-btn">➤</button>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal" id="auth-modal" aria-hidden="true">
+    <div class="modal-content">
+      <span style="float:right; cursor:pointer;" id="close-modal">×</span>
+      <h2 id="modal-title">Login</h2>
+      <div id="form-fields"></div>
+      <div style="margin-top:10px;">
+        <button id="auth-btn">Login</button>
+      </div>
+      <div class="toggle-link" id="toggle-link">Don't have an account? Register</div>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ---------- Section Navigation ---------- */
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+    if (id === 'dashboard') showDashboard();
+  }
+  window.showSection = showSection;
+
+  /* ---------- Navbar Update ---------- */
+  function updateNavbar() {
+    const nav = document.getElementById('nav-links');
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (currentUser) {
+      nav.innerHTML = `
+        <a onclick="showSection('dashboard')">Dashboard</a>
+        <a onclick="showSection('about')">About Us</a>
+        <a onclick="showSection('features')">Features</a>
+        <a id="logout-link" style="cursor:pointer;">Logout</a>
+      `;
+      document.getElementById('logout-link').addEventListener('click', () => {
+        localStorage.removeItem('currentUser');
+        showSection('home');
+        updateNavbar();
+      });
+    } else {
+      nav.innerHTML = `
+        <a onclick="showSection('about')">About Us</a>
+        <a onclick="showSection('home')">Home</a>
+        <a onclick="showSection('features')">Features</a>
+        <a id="login-link" style="cursor:pointer;">Login</a>
+      `;
+      document.getElementById('login-link').addEventListener('click', () => {
+        document.getElementById('auth-modal').style.display = 'flex';
+        document.getElementById('auth-modal').setAttribute('aria-hidden','false');
+      });
+    }
+  }
+
+  /* ---------- Auth Modal ---------- */
+  const authModal = document.getElementById('auth-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const formFields = document.getElementById('form-fields');
+  const authBtn = document.getElementById('auth-btn');
+  const toggleLink = document.getElementById('toggle-link');
+  let isLogin = true;
+
+  function renderAuthForm() {
+    if (isLogin) {
+      modalTitle.textContent = 'Login';
+      formFields.innerHTML = `
+        <input id="email" type="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+      `;
+      authBtn.textContent = 'Login';
+      toggleLink.textContent = "Don't have an account? Register";
+    } else {
+      modalTitle.textContent = 'Register';
+      formFields.innerHTML = `
+        <input id="full-name" type="text" placeholder="Full Name" />
+        <input id="email" type="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+      `;
+      authBtn.textContent = 'Register';
+      toggleLink.textContent = 'Already have an account? Login';
+    }
+  }
+  renderAuthForm();
+
+  document.getElementById('get-started-btn').addEventListener('click', () => {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      showSection('dashboard');
+    } else {
+      authModal.style.display = 'flex';
+      authModal.setAttribute('aria-hidden','false');
+    }
+  });
+
+  toggleLink.addEventListener('click', () => { isLogin = !isLogin; renderAuthForm(); });
+  document.getElementById('close-modal').addEventListener('click', () => {
+    authModal.style.display = 'none'; authModal.setAttribute('aria-hidden','true');
+  });
+
+  authBtn.addEventListener('click', () => { if (isLogin) login(); else register(); });
+
+  function register() {
+    const name = document.getElementById('full-name')?.value?.trim();
+    const email = document.getElementById('email')?.value?.trim();
+    const password = document.getElementById('password')?.value;
+    if (!name || !email || !password) { alert('Please fill all fields'); return; }
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    if (users[email]) { alert('User already exists'); return; }
+    users[email] = { name, password };
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', email);
+    authModal.style.display = 'none'; authModal.setAttribute('aria-hidden','true');
+    updateNavbar();
+    showSection('dashboard');
+    showDashboard(); // <-- ADDED: refresh dashboard immediately after register
+  }
+
+  function login() {
+    const email = document.getElementById('email')?.value?.trim();
+    const password = document.getElementById('password')?.value;
+    if (!email || !password) { alert('Please fill all fields'); return; }
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    if (!users[email] || users[email].password !== password) { alert('Invalid credentials'); return; }
+    localStorage.setItem('currentUser', email);
+    authModal.style.display = 'none';
+    authModal.setAttribute('aria-hidden','true');
+    updateNavbar();
+    showSection('dashboard');
+    showDashboard(); // <-- ADDED: refresh dashboard immediately after login
+  }
+
+  /* ---------- Dashboard ---------- */
+  function showDashboard() {
+    const email = localStorage.getItem('currentUser');
+    if (!email) { showSection('home'); return; }
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const user = users[email];
+    document.getElementById('user-name').textContent = user?.name || 'Guest';
+    document.getElementById('profile-name').textContent = user?.name || '—';
+    document.getElementById('profile-email').textContent = email || '—';
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    showSection('home');
+    updateNavbar();
+  });
+
+  document.querySelectorAll('#dashboard-nav button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#dashboard-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.dashboard-tab').forEach(tab => tab.style.display = 'none');
+      if (btn.dataset.tab === 'chat') document.getElementById('chat-tab').style.display = 'block';
+      else document.getElementById(btn.dataset.tab).style.display = 'block';
+    });
+  });
+
+  /* ---------- Chat popup with persistence ---------- */
+  const chatBtn = document.getElementById('chat-btn');
+  const chatPopup = document.getElementById('chat-popup');
+  const closeChat = document.getElementById('close-chat');
+  const chatHistory = document.getElementById('chat-history');
+  const chatInput = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const openChatBtn = document.getElementById('open-chat-btn');
+
+  function loadChat() {
+    // store per-user chat history; if no user logged in, fall back to shared 'chatHistory'
+    const currentUser = localStorage.getItem('currentUser');
+    const key = currentUser ? `chatHistory_${currentUser}` : 'chatHistory';
+    const messages = JSON.parse(localStorage.getItem(key) || '[]');
+    chatHistory.innerHTML = '';
+    messages.forEach(msg => {
+      const div = document.createElement('div');
+      div.className = msg.type === 'user' ? 'user-message' : 'bot-message';
+      div.textContent = msg.text;
+      chatHistory.appendChild(div);
+    });
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+  }
+
+  function openChat() {
+    chatPopup.style.display = 'flex';
+    chatPopup.setAttribute('aria-hidden','false');
+    chatInput.focus();
+    loadChat();
+  }
+
+  chatBtn.addEventListener('click', openChat);
+  if (openChatBtn) openChatBtn.addEventListener('click', openChat);
+
+  closeChat.addEventListener('click', () => {
+    chatPopup.style.display = 'none';
+    chatPopup.setAttribute('aria-hidden','true');
+  });
+
+  function saveMessage(type, text) {
+    // store per-user chat history; if no user logged in, fall back to shared 'chatHistory'
+    const currentUser = localStorage.getItem('currentUser');
+    const key = currentUser ? `chatHistory_${currentUser}` : 'chatHistory';
+    const messages = JSON.parse(localStorage.getItem(key) || '[]');
+    messages.push({ type, text });
+    localStorage.setItem(key, JSON.stringify(messages));
+  }
+
+  /* Typing indicator helper */
+  function showTypingIndicatorElement() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'typing-indicator';
+    typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    chatHistory.appendChild(typingDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+    return typingDiv;
+  }
+
+  /* ---------- Taglish Keyword-based Bot Replies (added) ---------- */
+  function getBotReply(input) {
+    const replies = [
+      { keywords: ['stressed','workload','dami','trabaho','busy','pagod'], reply: "Uy, I feel you… ang bigat nga nito 😅 Gusto mo if sabay tayong mag-breathe konti, parang chill muna tayo?" },
+      { keywords: ['presentation','present','presenting','kabahan','nervous'], reply: "Haha omg, normal 'yan 😅 Gusto mo i-guide kita sa breathing + little visualization para mas chill ka? Inhale 4 — hold 4 — exhale 6. Ulitin 3x." },
+      { keywords: ['overthink','over-thinking','isip','think too much'], reply: "Aww… I feel you. Nakaka-drain talaga 😖 Gusto mo subukan yung '5-4-3-2-1' grounding exercise? I-guide kita." },
+      { keywords: ['walang gana','lazy','no energy','wala akong gana'], reply: "Haha same tbh 😅 Minsan ganun lang. Gusto mo gawin natin maliit step na doable lang? Stretch 2 mins or inom ng tubig muna?" },
+      { keywords: ['lungkot','sad','alone','mag-isa','wala akong kausap'], reply: "Awww… I feel you 😢 Gusto mo suggestions paano ma-feel mo connected kahit konti? Pwede kontakin friend or join reading group." },
+      { keywords: ['maganda','hindi ako maganda','self-esteem','confidence'], reply: "Awww… I feel you 😔 Gusto mo konting pep talk, parang friend lang? Repeat after me: \"I'm enough, at deserve ko kindness at respect.\" " },
+      { keywords: ['sleep','insomnia','hindi makatulog','kakatulog'], reply: "Uy, I feel you 😓 Nakaka-frustrate talaga 'yan. Gusto mo guided relaxation? Close eyes, inhale 4 — hold 4 — exhale 6. Imagine a quiet place." },
+      { keywords: ['panic','panic attack','panik','sobrang takot'], reply: "Oh no… chill lang muna, nandito ako 😟 Breathe with me: inhale 4, hold 4, exhale 6. Kung mas malala, humingi agad ng tulong medikal." },
+      { keywords: ['exam','study','mabagsak','takot exam','exam tomorrow'], reply: "Haha normal yan 😅 Break study into small chunks, set a timer, short breaks. Breathe 4-4-6 bago exam. Gusto quick study plan?" },
+      { keywords: ['burnout','sobra pagod','sobra stress'], reply: "Huhu… sounds like burnout 😔 Gusto mo gumawa tayo maliit self-care plan today? 10 mins activity lang muna." },
+      { keywords: ['shy','ma-judge','ayoko lumabas','social'], reply: "I feel you 😓 Social situations nakaka-overwhelm nga. Try small steps: short hi to a neighbor, grounding, and breathing." },
+      { keywords: ['suicide','patayin','saktan sarili','want to die','self-harm'], reply: "Kung iniisip mo saktan sarili, please tumawag kaagad ng lokal na emergency o helpline. Sa PH, tawag 1553 or pumunta sa pinakamalapit na hospital. Gusto mo options para makakuha ng support ngayon?" },
+      { keywords: ['love','crush','relationship','manliligaw'], reply: "Ramdam ko yung pagka-isa na naranasan mo ❤️ Try makisalamuha sa activities, dating apps, at smile more. Gusto mo practical tips?" },
+      { keywords: ['jealous','selos'], reply: "Selos is normal. Pause muna, huminga, at pag-usapan kung kailangan. Gusto tips paano i-handle yung feeling?" },
+      { keywords: ['lgbt','bakla','gay','identity','coming out'], reply: "Congrats sa pagiging totoo! 🫂 Walang mali sayo. Pwede kitang tulungan mag-think ng safe steps para i-share 'to sa pamilya or trusted person." }
+    ];
+
+    const lower = input.toLowerCase();
+
+    // check for exact keywords in order
+    for (let r of replies) {
+      for (let k of r.keywords) {
+        if (lower.includes(k)) return r.reply;
+      }
+    }
+
+    // fallback generic supportive reply
+    return "Huhu 😅 I feel you. Pwede mo kwento pa ng konti para mas matulungan kita?";
+  }
+
+  function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    const userMsg = document.createElement('div');
+    userMsg.className = 'user-message';
+    userMsg.textContent = text;
+    chatHistory.appendChild(userMsg);
+    saveMessage('user', text);
+    chatInput.value = '';
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    // typing indicator
+    const typingEl = showTypingIndicatorElement();
+
+    // natural typing delay
+    const typingDelay = 800 + Math.min(text.length * 20, 1200);
+
+    setTimeout(() => {
+      // remove typing indicator if still present
+      if (typingEl && typingEl.parentNode) typingEl.parentNode.removeChild(typingEl);
+
+      // dynamic reply based on keywords
+      const botReply = getBotReply(text);
+
+      const botMsg = document.createElement('div');
+      botMsg.className = 'bot-message';
+      botMsg.textContent = botReply;
+      chatHistory.appendChild(botMsg);
+      saveMessage('bot', botReply);
+      chatHistory.scrollTop = chatHistory.scrollHeight;
+
+    }, typingDelay);
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+
+  /* ---------- Initialize ---------- */
+  updateNavbar();
+
+});
+</script>
+
+</body>
+</html>
